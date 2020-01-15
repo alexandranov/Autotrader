@@ -1,3 +1,6 @@
+using System;
+using System.Diagnostics;
+using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -21,14 +24,29 @@ namespace Autotrader
             
         }
 
-        [Test(Description = "Go to autotrader and find cars")]
+        [Test(Description = "Go to car and find cars")]
         public void Test1()
         {
             MainPage mainPage = new MainPage(driver, wait);
-            mainPage.WaitModalMessageDidsplayed();
-            mainPage.ClickOnCloseModalMessage();
-            mainPage.EnterZipCode();
+            Trace.WriteLine("Start");
 
+            mainPage.ClickDropDownAneMode();
+            mainPage.ChoosePORCHE();
+            mainPage.EnterZipCode();
+            mainPage.ClickSearch();
+            mainPage.WaitVisibleChooseYear();
+            
+            mainPage.ClickMinYearDropdown();
+            mainPage.ChooseMinYear();
+            Thread.Sleep(100);
+           // mainPage.WaitListOfCar();
+            mainPage.FindAndRememberVins();
+            for(int i = 1; i < 3; i++)
+            {
+                Console.WriteLine(mainPage.vins[i]);
+            }
+            
+           
             Assert.Pass();
         }
     }
